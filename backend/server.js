@@ -17,7 +17,6 @@ const logger = require('./utils/logger');
 
 const app = express();
 const PORT = Number(process.env.PORT) || 5000;
-const PORT_FROM_ENV = typeof process.env.PORT !== 'undefined';
 
 app.use(cors());
 app.use(express.json());
@@ -47,8 +46,8 @@ const start = async () => {
     if (dbStatus?.error) logger.warn(dbStatus.error.message || dbStatus.error);
   }
 
-  // Attempt to listen on PORT. If PORT was explicitly set via env, fail-fast on EADDRINUSE.
-  const maxRetries = PORT_FROM_ENV ? 1 : 10;
+  // Attempt to listen on the requested port, but fall back to the next available port if it is already busy.
+  const maxRetries = 10;
   let attempt = 0;
   let currentPort = PORT;
 
@@ -62,11 +61,6 @@ const start = async () => {
 
     server.on('error', (err) => {
       if (err && err.code === 'EADDRINUSE') {
-        if (PORT_FROM_ENV) {
-          logger.error(`Port ${currentPort} is already in use. Stop the process using it or set a different PORT environment variable.`);
-          process.exit(1);
-        }
-
         logger.warn(`Port ${currentPort} in use, attempting next port... (attempt ${attempt}/${maxRetries})`);
         server.close?.();
         if (attempt < maxRetries) {
