@@ -20,7 +20,18 @@ const PORT = Number(process.env.PORT) || 5000;
 
 const allowedOrigins = [
   'http://localhost:5173',
-  'https://healthpredict.netlify.app',
+  cd "d:\data engineering\health predection system\backend"
+  git add server.js
+  git commit -m "Fix: CORS preflight status (optionsSuccessStatus=200)" || echo "No changes to commit"
+  git push
+  
+  cd "d:\data engineering\health predection system\frontend"
+  npm run build
+  
+  cd "d:\data engineering\health predection system\frontend"
+  git add -f dist/
+  git commit -m "Fix CORS and API URL" || echo "No changes to commit"
+  git push  'https://healthpredict.netlify.app',
   'https://phenomenal-tiramisu-43fd29.netlify.app',
 ];
 
@@ -37,6 +48,8 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
+// Ensure preflight (OPTIONS) requests receive the CORS headers
+app.options('*', cors(corsOptions));
 app.use(express.json());
 
 // Auth routes (public)
