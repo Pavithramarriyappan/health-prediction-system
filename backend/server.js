@@ -18,7 +18,25 @@ const logger = require('./utils/logger');
 const app = express();
 const PORT = Number(process.env.PORT) || 5000;
 
-app.use(cors());
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://healthpredict.netlify.app',
+  'https://phenomenal-tiramisu-43fd29.netlify.app',
+];
+
+const corsOptions = {
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error(`CORS policy blocked origin: ${origin}`));
+    }
+  },
+  // Ensure legacy browsers and some preflight checks receive a 200 OK
+  optionsSuccessStatus: 200,
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // Auth routes (public)
