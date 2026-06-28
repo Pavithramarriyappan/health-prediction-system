@@ -1,7 +1,11 @@
 import axios from 'axios'
 
+// Prefer explicit VITE_API_URL, fall back to the known Render host, then localhost
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000/api',
+  baseURL:
+    import.meta.env.VITE_API_URL ||
+    'https://health-prediction-system-5.onrender.com/api' ||
+    'http://localhost:5000/api',
   timeout: 30000, // Increased to 30 seconds for email processing
 })
 
