@@ -47,7 +47,7 @@ const start = async () => {
   }
 
   // Attempt to listen on the requested port, but fall back to the next available port if it is already busy.
-  const maxRetries = 10;
+  const maxRetries = 100;
   let attempt = 0;
   let currentPort = PORT;
 
