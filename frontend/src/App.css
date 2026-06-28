@@ -1,0 +1,4 @@
+/* minimal styles copied from root */
+#center{display:flex;gap:24px;align-items:center}
+.hero{display:flex;align-items:center;gap:12px}
+.counter{border-radius:8px}
