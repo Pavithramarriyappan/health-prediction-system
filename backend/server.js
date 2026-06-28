@@ -31,18 +31,7 @@ app.use((req, res, next) => {
 
 const allowedOrigins = [
   'http://localhost:5173',
-  cd "d:\data engineering\health predection system\backend"
-  git add server.js
-  git commit -m "Fix: CORS preflight status (optionsSuccessStatus=200)" || echo "No changes to commit"
-  git push
-  
-  cd "d:\data engineering\health predection system\frontend"
-  npm run build
-  
-  cd "d:\data engineering\health predection system\frontend"
-  git add -f dist/
-  git commit -m "Fix CORS and API URL" || echo "No changes to commit"
-  git push  'https://healthpredict.netlify.app',
+  'https://healthpredict.netlify.app',
   'https://phenomenal-tiramisu-43fd29.netlify.app',
 ];
 
